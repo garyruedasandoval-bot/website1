@@ -5,6 +5,7 @@ import ServiceDetail from './components/ServiceDetail';
 import TrustedAlliances from './components/TrustedAlliances';
 import WhyChooseUs from './components/WhyChooseUs';
 import AssessmentModal from './components/AssessmentModal'; // Import the Agent
+import ContactModal from './components/ContactModal'; // Import the Contact Modal
 import { SERVICE_CATALOG, COMPANY_NAME } from './constants';
 import { ServiceItem, Pillar } from './types';
 import { ArrowRight, CheckCircle, Zap, Shield, Users } from 'lucide-react';
@@ -13,6 +14,7 @@ const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<'home' | 'catalog' | 'detail'>('home');
   const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
   const [isAssessmentOpen, setIsAssessmentOpen] = useState(false); // State for the modal
+  const [isContactOpen, setIsContactOpen] = useState(false); // State for the contact modal
   
   // Handle scrolling to hash if present after view change
   useEffect(() => {
@@ -38,6 +40,11 @@ const App: React.FC = () => {
   };
 
   const handleNav = (view: string, sectionId?: string) => {
+    if (view === 'contact') {
+      setIsContactOpen(true);
+      return;
+    }
+
     if (view === 'home') setCurrentView('home');
     
     if (view === 'catalog') {
@@ -71,6 +78,7 @@ const App: React.FC = () => {
   return (
     <Layout onNavigate={handleNav}>
       <AssessmentModal isOpen={isAssessmentOpen} onClose={() => setIsAssessmentOpen(false)} />
+      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
 
       {currentView === 'home' && (
         <>
